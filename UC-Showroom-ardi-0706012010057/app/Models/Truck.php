@@ -4,16 +4,16 @@ namespace App\Models;
 
 class Truck extends Vehicle
 {
-    // Define table name
+    // Menentukan nama tabel
     protected $table = 'trucks';
 
-    // Define primary key
+    // Menentukan kunci utama
     protected $primaryKey = 'truck_id';
 
-    // Define fillable columns
+    // Menentukan kolom yang dapat diisi
     protected $fillable = ['wheel_count', 'cargo_area_size'];
 
-    // Represent a one-to-one relationship with the Vehicle model.
+    // Merepresentasikan hubungan satu-satu dengan model Vehicle.
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class);

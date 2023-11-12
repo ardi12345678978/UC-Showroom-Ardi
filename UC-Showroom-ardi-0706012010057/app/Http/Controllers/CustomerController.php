@@ -8,37 +8,34 @@ use App\Models\Customer;
 class CustomerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar semua pelanggan.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        // Displays a list of all customers.
         $customers = Customer::all();
         return view('customers.index', compact('customers'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan formulir untuk membuat pelanggan baru.
      *
      * @return \Illuminate\View\View
      */
     public function create()
     {
-        // Displays the form for creating a new customer.
         return view('customers.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan pelanggan baru ke dalam penyimpanan.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        // Validates and stores a newly created customer in the database.
         $request->validate([
             'name' => 'required',
             'address' => 'required',
@@ -46,37 +43,34 @@ class CustomerController extends Controller
             'id_card' => 'required',
         ]);
 
-        // Creates a new customer using the request data.
         Customer::create($request->all());
-        return redirect()->route('customers.index')->with('success', 'Customer created successfully');
+        return redirect()->route('customers.index')->with('success', 'Pelanggan berhasil dibuat');
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan informasi terperinci tentang pelanggan tertentu.
      *
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\View\View
      */
     public function show(Customer $customer)
     {
-        // Displays detailed information about a specific customer.
         return view('customers.show', compact('customer'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan formulir untuk mengedit pelanggan tertentu.
      *
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\View\View
      */
     public function edit(Customer $customer)
     {
-        // Displays the form for editing an existing customer.
         return view('customers.edit', compact('customer'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui pelanggan tertentu di dalam penyimpanan.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Customer  $customer
@@ -84,7 +78,6 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        // Validates and updates the specified customer in the database.
         $request->validate([
             'name' => 'required',
             'address' => 'required',
@@ -92,21 +85,19 @@ class CustomerController extends Controller
             'id_card' => 'required',
         ]);
 
-        // Updates the customer using the request data.
         $customer->update($request->all());
-        return redirect()->route('customers.index')->with('success', 'Customer updated successfully');
+        return redirect()->route('customers.index')->with('success', 'Pelanggan berhasil diperbarui');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus pelanggan tertentu dari penyimpanan.
      *
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Customer $customer)
     {
-        // Deletes a specific customer from the database.
         $customer->delete();
-        return redirect()->route('customers.index')->with('success', 'Customer deleted successfully');
+        return redirect()->route('customers.index')->with('success', 'Pelanggan berhasil dihapus');
     }
 }

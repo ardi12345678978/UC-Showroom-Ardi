@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    // Define table name
+    // Menentukan nama tabel
     protected $table = 'customers';
 
-    // Define primary key
+    // Menentukan kunci utama
     protected $primaryKey = 'customer_id';
 
-    // Define fillable columns
+    // Menentukan kolom yang dapat diisi
     protected $fillable = ['name', 'address', 'phone_number', 'id_card'];
 
-    // Represent a one-to-many relationship with the Order model.
+    // Merepresentasikan hubungan satu-banyak dengan model Order.
     public function order()
     {
         return $this->hasMany(Order::class);

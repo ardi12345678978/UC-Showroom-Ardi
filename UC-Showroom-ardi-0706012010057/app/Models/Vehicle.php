@@ -6,34 +6,34 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vehicle extends Model
 {
-    // Define table name
+    // Menentukan nama tabel
     protected $table = 'vehicles';
 
-    // Define primary key
+    // Menentukan kunci utama
     protected $primaryKey = 'vehicle_id';
 
-    // Define fillable columns
+    // Menentukan kolom yang dapat diisi
     protected $fillable = ['type', 'model', 'year', 'passenger_count', 'manufacturer', 'price'];
 
-    // Represent a one-to-many relationship with the Order model.
+    // Merepresentasikan hubungan satu-banyak dengan model Order.
     public function order()
     {
         return $this->hasMany(Order::class);
     }
 
-    // Represent a one-to-one relationship with the Car model.
+    // Merepresentasikan hubungan satu-satu dengan model Car.
     public function car()
     {
         return $this->hasOne(Car::class, 'vehicle_id', 'vehicle_id');
     }
 
-    // Represent a one-to-one relationship with the Motorcycle model.
+    // Merepresentasikan hubungan satu-satu dengan model Motorcycle.
     public function motorcycle()
     {
         return $this->hasOne(Motorcycle::class, 'vehicle_id', 'vehicle_id');
     }
 
-    // Represent a one-to-one relationship with the Truck model.
+    // Merepresentasikan hubungan satu-satu dengan model Truck.
     public function truck()
     {
         return $this->hasOne(Truck::class, 'vehicle_id', 'vehicle_id');

@@ -10,53 +10,53 @@ use App\Models\Order;
 class OrderController extends Controller
 {
     /**
-     * Display a listing of the orders.
+     * Menampilkan daftar semua pesanan.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        // Displays a list of all orders.
+        // Menampilkan daftar semua pesanan.
         $orders = Order::all();
         return view('orders.index', compact('orders'));
     }
 
     /**
-     * Show the form for creating a new order.
+     * Menampilkan formulir untuk membuat pesanan baru.
      *
      * @return \Illuminate\View\View
      */
     public function create()
     {
-        // Gets all customers and vehicles from the database.
+        // Mengambil semua data pelanggan dan kendaraan dari database.
         $customers = Customer::all();
         $vehicles = Vehicle::all();
 
-        // Displays the form for creating a new order.
+        // Menampilkan formulir untuk membuat pesanan baru.
         return view('orders.create', compact('customers', 'vehicles'));
     }
 
     /**
-     * Store a newly created order in the database.
+     * Menyimpan pesanan baru ke dalam database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        // Validates and stores a newly created order in the database.
+        // Melakukan validasi dan menyimpan pesanan baru ke dalam database.
         $request->validate([
             'customer_id' => 'required',
             'vehicle_id' => 'required',
         ]);
 
-        // Creates a new order using the request data.
+        // Membuat pesanan baru menggunakan data permintaan.
         Order::create($request->all());
-        return redirect()->route('orders.index')->with('success', 'Order created successfully');
+        return redirect()->route('orders.index')->with('success', 'Pesanan berhasil dibuat');
     }
 
     /**
-     * Display the specified order.
+     * Menampilkan pesanan tertentu.
      *
      * @param  \App\Models\Order  $order
      * @return \Illuminate\View\View
@@ -67,23 +67,23 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for editing the specified order.
+     * Menampilkan formulir untuk mengedit pesanan tertentu.
      *
      * @param  \App\Models\Order  $order
      * @return \Illuminate\View\View
      */
     public function edit(Order $order)
     {
-        // Gets all customers and vehicles from the database.
+        // Mengambil semua data pelanggan dan kendaraan dari database.
         $customers = Customer::all();
         $vehicles = Vehicle::all();
 
-        // Displays the form for editing the specified order.
+        // Menampilkan formulir untuk mengedit pesanan tertentu.
         return view('orders.edit', compact('order', 'customers', 'vehicles'));
     }
 
     /**
-     * Update the specified order in the database.
+     * Memperbarui pesanan tertentu di dalam database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Order  $order
@@ -91,27 +91,27 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        // Validates order in the database.
+        // Melakukan validasi pesanan di dalam database.
         $request->validate([
             'customer_id' => 'required',
             'vehicle_id' => 'required',
         ]);
 
-        // Updates the specified order in the database.
+        // Memperbarui pesanan tertentu di dalam database.
         $order->update($request->all());
-        return redirect()->route('orders.index')->with('success', 'Order updated successfully');
+        return redirect()->route('orders.index')->with('success', 'Pesanan berhasil diperbarui');
     }
 
     /**
-     * Remove the specified order from the database.
+     * Menghapus pesanan tertentu dari database.
      *
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Order $order)
     {
-        // Deletes the specified order from the database.
+        // Menghapus pesanan tertentu dari database.
         $order->delete();
-        return redirect()->route('orders.index')->with('success', 'Order deleted successfully');
+        return redirect()->route('orders.index')->with('success', 'Pesanan berhasil dihapus');
     }
 }

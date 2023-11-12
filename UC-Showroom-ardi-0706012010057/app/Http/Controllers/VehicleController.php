@@ -8,7 +8,7 @@ use App\Models\Vehicle;
 class VehicleController extends Controller
 {
     /**
-     * Display a listing of the vehicles.
+     * Menampilkan daftar semua kendaraan.
      *
      * @return \Illuminate\View\View
      */
@@ -19,7 +19,7 @@ class VehicleController extends Controller
     }
 
     /**
-     * Show the form for creating a new vehicle.
+     * Menampilkan formulir untuk membuat kendaraan baru.
      *
      * @return \Illuminate\View\View
      */
@@ -29,14 +29,14 @@ class VehicleController extends Controller
     }
 
     /**
-     * Store a newly created vehicle in the database.
+     * Menyimpan kendaraan baru ke dalam database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        // Validates and stores a newly created vehicle in the database.
+        // Validasi dan menyimpan kendaraan baru ke dalam database.
         $request->validate([
             'type' => 'required|in:Car,Motorcycle,Truck',
             'model' => 'required',
@@ -46,10 +46,10 @@ class VehicleController extends Controller
             'price' => 'required',
         ]);
 
-        // Create the main vehicle record
+        // Membuat catatan utama kendaraan
         $vehicle = Vehicle::create($request->only(['type', 'model', 'year', 'passenger_count', 'manufacturer', 'price']));
 
-        // Create the specific type record based on the selected type
+        // Membuat catatan tipe spesifik berdasarkan tipe yang dipilih
         if ($request->type === 'Car') {
             $vehicle->car()->create($request->only(['fuel_type', 'trunk_size_car']));
         } elseif ($request->type === 'Motorcycle') {
@@ -58,12 +58,12 @@ class VehicleController extends Controller
             $vehicle->truck()->create($request->only(['wheel_count', 'cargo_area_size']));
         }
 
-        // Redirect to the index page with a success message
-        return redirect()->route('vehicles.index')->with('success', 'Vehicle created successfully');
+        // Mengalihkan ke halaman indeks dengan pesan keberhasilan
+        return redirect()->route('vehicles.index')->with('success', 'Kendaraan berhasil dibuat');
     }
 
     /**
-     * Display the specified vehicle.
+     * Menampilkan kendaraan tertentu.
      *
      * @param  \App\Models\Vehicle  $vehicle
      * @return \Illuminate\View\View
@@ -74,7 +74,7 @@ class VehicleController extends Controller
     }
 
     /**
-     * Show the form for editing the specified vehicle.
+     * Menampilkan formulir untuk mengedit kendaraan tertentu.
      *
      * @param  \App\Models\Vehicle  $vehicle
      * @return \Illuminate\View\View
@@ -85,7 +85,7 @@ class VehicleController extends Controller
     }
 
     /**
-     * Update the specified vehicle in the database.
+     * Memperbarui kendaraan tertentu di dalam database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Vehicle  $vehicle
@@ -93,7 +93,7 @@ class VehicleController extends Controller
      */
     public function update(Request $request, Vehicle $vehicle)
     {
-        // Validates and updates the specified vehicle in the database.
+        // Validasi dan memperbarui kendaraan tertentu di dalam database.
         $request->validate([
             'model' => 'required',
             'year' => 'required',
@@ -102,10 +102,10 @@ class VehicleController extends Controller
             'price' => 'required',
         ]);
 
-        // Update the main vehicle record
+        // Memperbarui catatan utama kendaraan
         $vehicle->update($request->only(['model', 'year', 'passenger_count', 'manufacturer', 'price']));
 
-        // Update the specific type record based on the selected type
+        // Memperbarui catatan tipe spesifik berdasarkan tipe yang dipilih
         if ($vehicle->type === 'Car') {
             $vehicle->car->update($request->only(['fuel_type', 'trunk_size_car']));
         } elseif ($vehicle->type === 'Motorcycle') {
@@ -114,19 +114,19 @@ class VehicleController extends Controller
             $vehicle->truck->update($request->only(['wheel_count', 'cargo_area_size']));
         }
 
-        return redirect()->route('vehicles.index')->with('success', 'Vehicle updated successfully');
+        return redirect()->route('vehicles.index')->with('success', 'Kendaraan berhasil diperbarui');
     }
 
     /**
-     * Remove the specified vehicle from the database.
+     * Menghapus kendaraan tertentu dari database.
      *
      * @param  \App\Models\Vehicle  $vehicle
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Vehicle $vehicle)
     {
-        // Deletes a specific vehicle from the database.
+        // Menghapus kendaraan tertentu dari database.
         $vehicle->delete();
-        return redirect()->route('vehicles.index')->with('success', 'Vehicle deleted successfully');
+        return redirect()->route('vehicles.index')->with('success', 'Kendaraan berhasil dihapus');
     }
 }
